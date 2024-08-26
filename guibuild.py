@@ -1,25 +1,38 @@
-import tkinter as tk 
+import tkinter as tk
 import subprocess
-import webbrowser
 import os
 
 def Monte_Carlo():
     subprocess.Popen(['python', 'MonteCarlo.py'])
 
-
 def Time_Complexity():
     subprocess.Popen(['python', 'TIMECOMPLEXITYTEST2.py'])
 
+'''
 def PC_Growth_Notebook():
-    subprocess.Popen(['jupyter', 'notebook', 'Git_Repository/PercentageDifferenceOfficial.ipynb'])
+    # Use raw string or double backslashes for Windows paths
+    notebook_path = r'C:\Users\JKelly\Research\Git_Repository'
+    
+    # Check if Jupyter executable is in PATH; if not, use the full path to the executable
+    jupyter_command = 'jupyter'
+    
+    # You might need to use the full path to the Jupyter executable
+    # Example: jupyter_command = r'C:\path\to\jupyter.exe'
+    
+    subprocess.Popen([jupyter_command, 'notebook','pcgexported.py'],
+                     cwd=os.path.dirname(notebook_path))
+
+'''
+    
+
+def PC_Growth_Notebook():
+    subprocess.Popen(['python', 'pcgexported.py'])
 
 def Simple_Baseline_Refresh():
     subprocess.Popen(['python', 'SimpleBaselineRefresh.py'])
 
-
 def Complex_Baseline_Refresh():
     subprocess.Popen(['python', 'ComplexBaselineRefresh.py'])
-
 
 root = tk.Tk()
 root.title('Program Launcher')
