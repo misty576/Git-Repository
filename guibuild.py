@@ -11,7 +11,7 @@ def Time_Complexity():
     subprocess.Popen(['python', 'TIMECOMPLEXITYTEST2.py'])
 
 def PC_Growth_Notebook():
-    subprocess.Popen(['jupyter', 'notebook', 'PercentageDifferenceOfficial.ipynb'])
+    subprocess.Popen(['jupyter', 'notebook', 'Git_Repository/PercentageDifferenceOfficial.ipynb'])
 
 def Simple_Baseline_Refresh():
     subprocess.Popen(['python', 'SimpleBaselineRefresh.py'])
