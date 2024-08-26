@@ -1,5 +1,6 @@
 import tkinter as tk
 import subprocess
+import webbrowser
 import os
 
 def Monte_Carlo():
@@ -8,25 +9,17 @@ def Monte_Carlo():
 def Time_Complexity():
     subprocess.Popen(['python', 'TIMECOMPLEXITYTEST2.py'])
 
-'''
 def PC_Growth_Notebook():
-    # Use raw string or double backslashes for Windows paths
-    notebook_path = r'C:\Users\JKelly\Research\Git_Repository'
+    # Path to the notebook
+    notebook_path = r'C:/Users/JKelly/Research/Git_Repository/pcg.ipynb'
     
-    # Check if Jupyter executable is in PATH; if not, use the full path to the executable
-    jupyter_command = 'jupyter'
+    # Start Jupyter Notebook server
+    # subprocess.Popen([r'C:/path/to/jupyter.exe', 'notebook'], cwd=os.path.dirname(notebook_path))
+    subprocess.Popen(['jupyter', 'notebook'], cwd=os.path.dirname(notebook_path))
     
-    # You might need to use the full path to the Jupyter executable
-    # Example: jupyter_command = r'C:\path\to\jupyter.exe'
-    
-    subprocess.Popen([jupyter_command, 'notebook','pcgexported.py'],
-                     cwd=os.path.dirname(notebook_path))
-
-'''
-    
-
-def PC_Growth_Notebook():
-    subprocess.Popen(['python', 'pcgexported.py'])
+    # URL to open in browser
+    url = f'http://localhost:8888/notebooks/{os.path.basename(notebook_path)}'
+    webbrowser.open(url)
 
 def Simple_Baseline_Refresh():
     subprocess.Popen(['python', 'SimpleBaselineRefresh.py'])

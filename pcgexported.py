@@ -166,7 +166,6 @@ def exposure_simulation(n, baselineMTM, baselineNotional, mtmMin, mtmMax, notion
     plt.xlabel("# of trades")
     plt.ylabel("% Diff. from Brute Force")
     plt.legend()
-    plt.show()
 
 
 
@@ -176,7 +175,7 @@ def exposure_simulation(n, baselineMTM, baselineNotional, mtmMin, mtmMax, notion
 # %%
 
 
-widgets.interact(exposure_simulation, n = widgets.Play(min = 20 , max = 800, step = 20, interval=200),baselineMTM = widgets.IntSlider(min=0,max=100000,step=500,value=1000,description="BaseMTM"),
+interact(exposure_simulation, n = widgets.Play(min = 20 , max = 800, step = 20, interval=200),baselineMTM = widgets.IntSlider(min=0,max=100000,step=500,value=1000,description="BaseMTM"),
          baselineNotional = widgets.IntSlider(min=0,max=5000,step=20,value=200,description="BaseNotional"),
          mtmMin = widgets.IntSlider(min=-20000,max=0,step=50,value=-2000,description="MTM Min"),
          mtmMax = widgets.IntSlider(min=0,max=20000,step=50,value=3000,description="MTM Max"),
@@ -186,3 +185,5 @@ widgets.interact(exposure_simulation, n = widgets.Play(min = 20 , max = 800, ste
 )
 
 
+
+# %%
