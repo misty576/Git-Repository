@@ -235,3 +235,7 @@ def exposure_simulation(n, addon):
 
 
 exposure_simulation(100, 0.01)
+
+
+
+# Clearly the time complexity algorithms are not demonstrating that the brute force is slower; rather the opposite. So for the moment just forget about it, and move onto fixing the other programs
