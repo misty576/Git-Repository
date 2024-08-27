@@ -90,7 +90,6 @@ def psrAverages(position, impacts, addOnFactor, n, avg_list):
 
 
 
-
 def get_position_impacts(n):
     
     baseline_position = [10000000, 1000000]
