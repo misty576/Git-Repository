@@ -12,6 +12,7 @@ import ipywidgets as widgets
 from ipywidgets import interact, interactive, fixed, interact_manual
 import scipy
 from scipy.stats import chisquare
+import sys
 
 # new comment added here
 
@@ -132,7 +133,7 @@ def get_mean_variance(final_vals, samples):
 
 
 
-def exposure_simluation1(n, samples, addon):
+def exposure_simulation1(n, samples, addon):
 
 
     x = np.linspace(0,n+1,n+1)
@@ -224,9 +225,17 @@ def exposure_simluation1(n, samples, addon):
         print(f"P-value: {p_val}\n ")
 
 
+if __name__ == "__main__":
+    try:
+        n = int(input("Enter the number of trades (n): "))
+        samples = int(input("Enter the number of samples: "))
+        addon = float(input("Enter the addon factor: "))
 
+        exposure_simulation1(n, samples, addon)
 
-exposure_simluation1(250, 250, 0.01)
+    except ValueError:
+        print("Invalid input. Please enter numerical values.")
+
 
 
 # If we set the baseline mtm to be really low, we get an interesting result. For the brute force graph, we observe that we get a linear curve going up at the bottom, which I suspect is the effect of the Notional * AddOn factor coming into play
