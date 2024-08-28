@@ -48,7 +48,7 @@ def PSR_NGR(positions, addonfactor, singleposition):
     else:
         NGR = NetExposure/GrossExposure
     
-    PSR = CurrentExposure + NGR * (0.6) * (AddOn_Gross) + (0.4) * (AddOn_Gross)
+    PSR = max(0, CurrentExposure) + NGR * (0.6) * (AddOn_Gross) + (0.4) * (AddOn_Gross)
 
     return PSR
 
@@ -145,8 +145,7 @@ def main():
 
 
     # TEST 1: PSR_NGR = 30.765 , PSR_BruteForce = 30.9
-    
-    '''    
+       
     positions = np.zeros((4,2))
 
     positions[0,0] = 10
@@ -160,7 +159,7 @@ def main():
     positions[2,1] = 10
     positions[3,1] = 20
 
-    '''
+
     
     # TEST 1A
     '''
@@ -174,6 +173,7 @@ def main():
     '''
 
     # TEST 2: PSR_NGR = 15.51 , PSR_BruteForce = 15.6
+    '''
     positions = np.zeros((3,2))
 
     positions[0,0] = 10
@@ -184,19 +184,21 @@ def main():
     positions[1,1] = 10
     positions[2,1] = 30
 
+    '''
+
     addonfactor = 0.01
     singleposition = False
 
 
-    print("PSR NGR : ", PSR_NGR(positions, addonfactor, singleposition))
-    print("PSR Normal : ", PSR_Normal(positions, addonfactor, singleposition))
+    print("\n")
+    print("[PSR NGR, PSR Normal] for Brute Force: ", [PSR_NGR(positions, addonfactor, singleposition), PSR_Normal(positions, addonfactor, singleposition)])
     print("\n")
 
     print("[PSR NGR, PSR Normal] for Linearisation: ", PSR_Linear(positions, addonfactor))
     print("\n")
     print("[PSR NGR, PSR Normal] for Conservative: ", PSR_Conservative(positions, addonfactor))
     print("\n")
-    print("[PSR NGR, PSR Normal] for Averages: ", PSR_Average(positions, addonfactor, 2))
+    print("[PSR NGR, PSR Normal] for Averages: ", PSR_Average(positions, addonfactor, 3))
 
 
 main()

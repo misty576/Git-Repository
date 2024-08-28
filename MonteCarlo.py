@@ -92,14 +92,14 @@ def psrAverages(position, impacts, addOnFactor, n, avg_list):
 
 def get_position_impacts(n):
     
-    baseline_position = [10000000, 1000000]
+    baseline_position = [10000, 1000000]
     mtm_notional_matrix = np.zeros((n,2))
 
     
     for i in range(n):
 
-        mtm_notional_matrix[i,0] = random.randint(-50000,50000)
-        mtm_notional_matrix[i,1] = random.randint(0,250000)
+        mtm_notional_matrix[i,0] = random.randint(-1000,1000)
+        mtm_notional_matrix[i,1] = abs(mtm_notional_matrix[i,0]*10)
 
     return [baseline_position, mtm_notional_matrix]
 
@@ -198,13 +198,14 @@ def exposure_simulation1(n, samples, addon):
     
 
     for i in range(samples):
-
-        plt.plot(x,cons_list_backup[i] - 1/1000*mu[2]*x, 'b', label="Conservative")
+        # 20000 here is the original psr of the baseline position. You can change it if you change the set up of the baseline position
+        plt.plot(x,cons_list_backup[i] - 1/100*(mu[2]-20000)*x, 'b', label="Conservative")
 
     plt.title("Conservative Approach (after Shear Trasformation)")
     plt.xlabel("Trade Number")
     plt.ylabel("Exposure (Not Scaled)")
     plt.show()
+    
 
     for i, method in enumerate(['Brute Force', 'Linearisation', 'Conservation', 'Averages']):
         observed_data = final_vals[i,:]
@@ -224,16 +225,8 @@ def exposure_simulation1(n, samples, addon):
         print(f"P-value: {p_val}\n ")
 
 
-if __name__ == "__main__":
-    try:
-        n = int(input("Enter the number of trades (n): "))
-        samples = int(input("Enter the number of samples: "))
-        addon = float(input("Enter the addon factor: "))
 
-        exposure_simulation1(n, samples, addon)
-
-    except ValueError:
-        print("Invalid input. Please enter numerical values.")
+exposure_simulation1(100, 500, 0.01)
 
 
 

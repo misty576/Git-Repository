@@ -26,3 +26,6 @@ def monte_carlo(trades, num_simulations):
 
    for i in range(num_simulations):
       scenario = 0
+
+
+def calculate_settlement_risk(trade, current_exchange_rate, time_differe)
