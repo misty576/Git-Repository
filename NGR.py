@@ -31,13 +31,12 @@ def PSR_NGR(positions, addonfactor, singleposition):
     NetExposure = 0
     AddOn_Gross = 0
 
-    for i in range(len(positions)):
-
-        if singleposition == True:
-            GrossExposure += max(0, positions[0])
-            CurrentExposure += positions[0]
-            AddOn_Gross += addonfactor * positions[1]
-        else:
+    if singleposition == True:
+        GrossExposure += max(0, positions[0])
+        CurrentExposure += positions[0]
+        AddOn_Gross += addonfactor * positions[1]
+    else:
+        for i in range(len(positions)):
             GrossExposure += max(0, positions[i,0])
             CurrentExposure += positions[i,0]
             AddOn_Gross += addonfactor * positions[i,1]
@@ -58,12 +57,11 @@ def PSR_Normal(positions, addonfactor, singleposition):
     MtM = 0
     AddOn = 0
 
-    for i in range(len(positions)):
-
-        if singleposition == True:
-            MtM += positions[0]
-            AddOn += addonfactor * positions[1]
-        else:
+    if singleposition == True:
+        MtM += positions[0]
+        AddOn += addonfactor * positions[1]
+    else:
+        for i in range(len(positions)):
             MtM += positions[i,0]
             AddOn += addonfactor * positions[i,1]
 
@@ -95,16 +93,17 @@ def PSR_Linear(positions, addonfactor):
     base_PSR_Normal = 0
 
     singleposition = True
-    base_PSR_NGR += PSR_NGR(positions[0,:], addonfactor, singleposition)
+    sample = positions[0,:]
+    base_PSR_NGR += PSR_NGR(sample, addonfactor, singleposition)
     total_PSR_NGR = base_PSR_NGR
 
-    base_PSR_Normal += PSR_Normal(positions[0,:], addonfactor, singleposition)
+    base_PSR_Normal += PSR_Normal(sample, addonfactor, singleposition)
     total_PSR_Normal = base_PSR_Normal
     singleposition = False
 
     for i in range(len(positions)-1):
-        total_PSR_NGR += (PSR_NGR(positions[i:(i+1),:], addonfactor, singleposition) - base_PSR_NGR)
-        total_PSR_Normal += (PSR_Normal(positions[i:(i+1),:], addonfactor, singleposition) - base_PSR_Normal)
+        total_PSR_NGR += (PSR_NGR(positions[[0,i+1], :], addonfactor, singleposition) - base_PSR_NGR)
+        total_PSR_Normal += (PSR_Normal(positions[[0,i+1], :], addonfactor, singleposition) - base_PSR_Normal)
 
 
     return [total_PSR_NGR, total_PSR_Normal]
@@ -126,8 +125,16 @@ def PSR_Average(positions, addonfactor, n):
     singleposition = False
 
     for i in range(len(positions)-1):
-        total_PSR_NGR += 1/n*(PSR_NGR(positions[i:(i+1),:], addonfactor, singleposition) - base_PSR_NGR)
-        total_PSR_Normal += 1/n*(PSR_Normal(positions[i:(i+1),:], addonfactor, singleposition) - base_PSR_Normal)
+
+        # take out the baseline position and the x_i position
+        trade_i = positions[[0,i+1], :]
+        
+        # multiply the i-th position by n - as it happens in the formula
+        trade_i[1,:] *= n
+
+        # multiply the formula by n
+        total_PSR_NGR += 1/n*(PSR_NGR(trade_i, addonfactor, singleposition) - base_PSR_NGR)
+        total_PSR_Normal += 1/n*(PSR_Normal(trade_i, addonfactor, singleposition) - base_PSR_Normal)
 
 
     return [total_PSR_NGR, total_PSR_Normal]
@@ -139,7 +146,7 @@ def main():
 
     # TEST 1: PSR_NGR = 30.765 , PSR_BruteForce = 30.9
     
-    '''
+    '''    
     positions = np.zeros((4,2))
 
     positions[0,0] = 10
@@ -153,40 +160,32 @@ def main():
     positions[2,1] = 10
     positions[3,1] = 20
 
-
     '''
-
-    positions = np.zeros((4,2))
+    
+    # TEST 1A
+    '''
+    positions = np.zeros((2,2))
 
     positions[0,0] = 10
     positions[1,0] = 20
-    positions[2,0] = 10
-    positions[3,0] = 10
-
     
     positions[0,1] = 20
     positions[1,1] = 40
-    positions[2,1] = 10
-    positions[3,1] = 20
-
-
+    '''
 
     # TEST 2: PSR_NGR = 15.51 , PSR_BruteForce = 15.6
-    #positions = np.zeros((3,2))
+    positions = np.zeros((3,2))
 
-    #positions[0,0] = 10
-    #positions[1,0] = -5
-    #positions[2,0] = 10
+    positions[0,0] = 10
+    positions[1,0] = -5
+    positions[2,0] = 10
     
-    #positions[0,1] = 20
-    #positions[1,1] = 10
-    #positions[2,1] = 30
+    positions[0,1] = 20
+    positions[1,1] = 10
+    positions[2,1] = 30
 
     addonfactor = 0.01
     singleposition = False
-
-
-
 
 
     print("PSR NGR : ", PSR_NGR(positions, addonfactor, singleposition))
@@ -197,11 +196,12 @@ def main():
     print("\n")
     print("[PSR NGR, PSR Normal] for Conservative: ", PSR_Conservative(positions, addonfactor))
     print("\n")
-    print("[PSR NGR, PSR Normal] for Averages: ", PSR_Average(positions, addonfactor, 4))
+    print("[PSR NGR, PSR Normal] for Averages: ", PSR_Average(positions, addonfactor, 2))
 
 
 main()
 
 
-# the NGR methis is not working for the Lineraisation approach (and the others). Do some debugging tomorrow to see what is going wrong
+# Okay, so it seems that the methods are now working well.
 
+# Observation: for the averages approach, it seems that the NGR PSR is lower than the brute force approach. If this isn't an error, this would be interesting to explore.
