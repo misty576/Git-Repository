@@ -191,7 +191,7 @@ def exposure_simulation(n, addOn):
         if mtm_notional_matrix.shape[0] < 2:
             m = mtm_notional_matrix.shape[0]
         else:
-            m = random.randint(1,2)
+            m = random.randint(1,4)
             if len(refresh_points) == 0:
                 refresh_points.append(m)
             else:
@@ -316,7 +316,7 @@ def exposure_simulation(n, addOn):
     print("Average List", avg_list)
 
 
-exposure_simulation(4, 0.01)
+exposure_simulation(16, 0.01)
 
 
 

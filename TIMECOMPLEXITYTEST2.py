@@ -90,6 +90,17 @@ def totalExposure(position, addon, conservative):
 
 # for some reason this code is passing into the else part of the statement when the length is still 1. why????
 
+# if ISDA_A:
+#   Add position x to risk exposure
+# if ISDA_B:
+#   Add position y to risk exposure
+# if No Agreement:
+#   Calculate risk individually
+# 
+#   Sum all risks together : rho(x1 + x2) + rho(x3 + x4) + rho(x5) + rho(x6) + rho(x7) + ....    <--- Brute Force approach
+
+# Linear Approach : rho(baseline position) + sum(rho(baseline position + x1) - rho(baseline position))
+
 
 def check_policy(position):
     # this code simulates the time taken to check policy, and takes longer depending on how big your position becomes (no. of impacts in code)
