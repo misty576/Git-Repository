@@ -1,6 +1,6 @@
-# Gross MV = max(0, MV)
+# Gross MV = max(0, MtM)
 
-# Net MV = MV
+# Net MV = MtM
 
 # CurrentExposure = Current Exposure = Net MV = sum(mtm1 + mtm2 + ...)
 # Gross Exposure = sum(max(0,mtm1) + max(0,mtm2) + ...) 
@@ -141,11 +141,11 @@ def PSR_Average(positions, addonfactor, n):
 
 
 
-def main():
+def main(n):
 
 
     # TEST 1: PSR_NGR = 30.765 , PSR_BruteForce = 30.9
-       
+    '''    
     positions = np.zeros((4,2))
 
     positions[0,0] = 10
@@ -158,6 +158,18 @@ def main():
     positions[1,1] = 40
     positions[2,1] = 10
     positions[3,1] = 20
+    '''
+    
+    # Randomly generated set of [MTM, Notional]
+   
+    positions = np.zeros((n,2))
+
+    positions[0,0] = 100
+    positions[0,1] = 1000
+
+    for i in range(len(positions)-1):
+        positions[i+1,0] = random.randint(-10,10)
+        positions[i+1,1] = abs(5*positions[i,0])
 
 
     
@@ -173,6 +185,7 @@ def main():
     '''
 
     # TEST 2: PSR_NGR = 15.51 , PSR_BruteForce = 15.6
+
     '''
     positions = np.zeros((3,2))
 
@@ -184,8 +197,8 @@ def main():
     positions[1,1] = 10
     positions[2,1] = 30
 
-    '''
 
+    '''
     addonfactor = 0.01
     singleposition = False
 
@@ -199,11 +212,15 @@ def main():
     print("[PSR NGR, PSR Normal] for Conservative: ", PSR_Conservative(positions, addonfactor))
     print("\n")
     print("[PSR NGR, PSR Normal] for Averages: ", PSR_Average(positions, addonfactor, 3))
+    
+    print("\n")
+    print("Positions Matrix: ", positions)
 
 
-main()
+main(20)
 
 
 # Okay, so it seems that the methods are now working well.
 
-# Observation: for the averages approach, it seems that the NGR PSR is lower than the brute force approach. If this isn't an error, this would be interesting to explore.
+# WARNING: I still need to run some basic tests on the linearisation, averages and conservative code to confirm that the code is still calculating correctly!!!!
+

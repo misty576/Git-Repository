@@ -21,8 +21,8 @@ def run_sim():
         mtm = np.random.uniform(-1000,1000)
         notional = abs(mtm*10)
         exp = mtm + notional*(0.01)
-        #x[i+1] = x[i] + 1/100*mu*dt + 1/1000*sigma*exp
-        x[i+1] = x[i] + 1/100*mu*dt + sigma*np.random.randn()*np.sqrt(dt)
+        x[i+1] = x[i] + 1/100*mu*dt + 1/1000*sigma*exp
+        #x[i+1] = x[i] + 1/100*mu*dt + sigma*np.random.randn()*np.sqrt(dt)
 
     
     return x
