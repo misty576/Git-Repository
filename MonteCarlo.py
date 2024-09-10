@@ -89,7 +89,6 @@ def psrAverages(position, impacts, addOnFactor, n, avg_list):
     return avg_list
 
 
-
 def get_position_impacts(n):
     
     baseline_position = [10000, 1000000]
@@ -229,8 +228,6 @@ def exposure_simulation1(n, samples, addon):
 exposure_simulation1(100, 500, 0.01)
 
 
-
 # If we set the baseline mtm to be really low, we get an interesting result. For the brute force graph, we observe that we get a linear curve going up at the bottom, which I suspect is the effect of the Notional * AddOn factor coming into play
-
 
 # I want to do a shear transformation on the conservative graph, to convert it to a normal distribution again, try and figure out a way to apply a shear transformation on the graph, since right now itis plotting each one as it ais calculated, and then it calculates the mean and variance afterwards, which is annoying.
