@@ -214,7 +214,7 @@ def main(n):
     print("[PSR NGR, PSR Normal] for Averages: ", PSR_Average(positions, addonfactor, 3))
     
     print("\n")
-    print("Positions Matrix: ", positions)
+    print("Positions Matrix: \n", positions)
 
 
 main(20)
