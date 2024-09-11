@@ -3,9 +3,9 @@ import matplotlib.pyplot as plt
 
 np.random.seed(2020)
 
-x = np.random.uniform(-100,100,10**5)
-
-y = np.abs(x)
+x = np.random.uniform(-1000,1000,10**5)
+print(x)
+y = [max(0,i) + 0.1*abs(i) for i in x]
 
 plt.figure()
 plt.subplot(1,2,1)

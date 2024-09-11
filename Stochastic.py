@@ -1,27 +1,22 @@
-import random
 import numpy as np
+import random
 import matplotlib.pyplot as plt
 
-# each unit in time represents a new trade coming in
 
 addonfactor = 0.01
 
-Y = 0
-mu = 0
-standard_dev = 0
+np.random.seed(2020)
 
-for i in range(1,100):
-    X = np.random.uniform(-1000,1000)
-    
+X = np.random.uniform(-1000,1000,10**5)
 
-    Y = max(0, X) + addonfactor * 10 * abs(X)
-    mu += np.mean(Y)
-    standard_dev += np.std(Y)
+Y = [max(0,i) + addonfactor * 10 * abs(i) for i in X]
 
- # Note@ Research into how to calculate the mean of a max(0, Y), where Y is a random variable!
+# This monte carlo simluates the mean and variance, but maybe also show how it's done by hand as well !
+
+mu = np.mean(Y)
+standard_dev = np.std(Y)
 
 dt = 1
-
 
 print("Mean of distribution: " + str(mu) + "  Standard Deviation of distribution: " + str(standard_dev))
 print("\n")
@@ -34,15 +29,10 @@ def run_sim():
 
     x = np.zeros(n)
     x[0] = 20000
+
     for i in range(n-1):
-
-        #mtm = np.random.uniform(-1000,1000)
-        #notional = abs(mtm*10)
-        #exp = mtm + notional*(0.01)
-        #x[i+1] = x[i] + 1/100*mu*dt + 1/1000*sigma*exp
-
-        x[i+1] = x[i] + mu*dt + standard_dev*np.random.randn()*np.sqrt(dt)
-
+        # This is our ABM equation. There are more stochastic calculus notes on the paper. 
+        x[i+1] = x[i] + mu*dt + standard_dev*np.random.normal(0,1)*np.sqrt(dt)
     
     return x
 
@@ -53,6 +43,12 @@ for i in range(500):
     plt.plot(t, x, 'r')
 
 
+print("mu = ", mu)
+print("sigma = ", standard_dev)
+mu_T = mu*T
+sigma_T = standard_dev ** 2 * T
+print("Distribution of trades at trade 100 --> N( mu * t + X_0 , sigma^2 * t ) = N( " + str(mu*T + 20000) + " , " + str(standard_dev ** 2 * T) + " )")
 plt.xlabel("Trade number")
 plt.ylabel("Exposure")
 plt.show()
+

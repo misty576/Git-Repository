@@ -58,7 +58,6 @@ def totalExposure(position, addon, conservative):
         if len(position) == 1:
             currExp = currentExposure(position[0][0])
             currAddon = addOnCalculator(position[0][1], addon)
-            check_policy(position)
             end_time = time.time()
             total_time = end_time - start_time
             
@@ -71,12 +70,10 @@ def totalExposure(position, addon, conservative):
                 notional += pos[1]
             currExp = currentExposure(mtm)
             currAddon = addOnCalculator(notional, addon)
-            check_policy(position)
     else:
         # this is for the conservative approach
         currExp = currentExposure(position[0])
         currAddon = addOnCalculator(position[1], addon)
-        check_policy(position)
 
         end_time = time.time()
         total_time = end_time - start_time
@@ -89,16 +86,7 @@ def totalExposure(position, addon, conservative):
     return [currExp + currAddon, total_time]
 
 # for some reason this code is passing into the else part of the statement when the length is still 1. why????
-
-
-
-def check_policy(position):
-    # this code simulates the time taken to check policy, and takes longer depending on how big your position becomes (no. of impacts in code)
-    size_factor = len(position)    
-    time.sleep(1e-10 * (size_factor**2))
-    
-
-    
+ 
 
 def psrBruteForce(baseline, impacts, addon):
     
@@ -114,7 +102,6 @@ def psrLinearisation(baseline, impacts, addon):
 
     total_time = 0
     exp_baseline = totalExposure(baseline, addon, conservative)
-    check_policy(baseline)
 
     total = exp_baseline
     for i in range(len(impacts)):
@@ -123,8 +110,6 @@ def psrLinearisation(baseline, impacts, addon):
         [total_exp, time_exp] = totalExposure(baseline_temp, addon, conservative)
         total += total_exp - exp_baseline
         total_time += time_exp
-        check_policy(baseline_temp)
-
 
     return [total, total_time]
 
@@ -139,8 +124,6 @@ def psrConservative(baseline, impacts, addon):
         [total_exp, time_exp] = totalExposure(position[i], addon, conservative)
         total += total_exp
         total_time += total_time
-        check_policy(position[i])
-    
 
     conservative = False
     return [total, total_time]
@@ -148,7 +131,6 @@ def psrConservative(baseline, impacts, addon):
 def psrAverages(baseline, impacts, addon, n):
 
     exp_baseline = totalExposure(baseline, addon, conservative)
-    check_policy(baseline)
 
     total = exp_baseline
     total_time = 0
@@ -159,7 +141,6 @@ def psrAverages(baseline, impacts, addon, n):
         [total_exp, time_exp] = totalExposure(baseline_temp, addon, conservative)
         total_time += time_exp
         total += 1/n*(total_exp - exp_baseline)
-        check_policy(baseline_temp)
     
     return [total, total_time]
 
