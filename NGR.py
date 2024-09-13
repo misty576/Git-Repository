@@ -214,10 +214,10 @@ def main(n):
     print("[PSR NGR, PSR Normal] for Averages: ", PSR_Average(positions, addonfactor, 3))
     
     print("\n")
-    print("Positions Matrix: \n", positions)
+    #print("Positions Matrix: \n", positions)
 
 
-main(20)
+main(50)
 
 
 # Okay, so it seems that the methods are now working well.
