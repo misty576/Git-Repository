@@ -145,8 +145,8 @@ def main(n):
 
 
     # TEST 1: PSR_NGR = 30.765 , PSR_BruteForce = 30.9
-    '''    
-    positions = np.zeros((4,2))
+    '''
+    positions = np.zeros((3,2))
 
     positions[0,0] = 10
     positions[1,0] = 20
@@ -159,9 +159,27 @@ def main(n):
     positions[2,1] = 10
     positions[3,1] = 20
     '''
+    '''
+    positions = np.zeros((2,2))
+
+    positions[0,0] = 10
+    positions[1,0] = -5
+
+    positions[0,1] = 20
+    positions[1,1] = 10
+    '''
     
+    positions = np.zeros((2,2))
+
+    positions[0,0] = 5
+    positions[1,0] = 10
+    
+    positions[0,1] = 30
+    positions[1,1] = 30
+    
+
     # Randomly generated set of [MTM, Notional]
-   
+    '''   
     positions = np.zeros((n,2))
 
     positions[0,0] = 100
@@ -171,6 +189,7 @@ def main(n):
         positions[i+1,0] = random.randint(-10,10)
         positions[i+1,1] = abs(5*positions[i,0])
 
+    '''
 
     
     # TEST 1A
@@ -211,7 +230,7 @@ def main(n):
     print("\n")
     print("[PSR NGR, PSR Normal] for Conservative: ", PSR_Conservative(positions, addonfactor))
     print("\n")
-    print("[PSR NGR, PSR Normal] for Averages: ", PSR_Average(positions, addonfactor, 3))
+    print("[PSR NGR, PSR Normal] for Averages: ", PSR_Average(positions, addonfactor, 1))
     
     print("\n")
     #print("Positions Matrix: \n", positions)
